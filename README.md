@@ -1,5 +1,3 @@
-# talento-tech-prediccion-demanda
-Proyecto ML - Predicción de consumo futuro de clientes | TalentoTech 2025
 # 🤖 Predicción de Demanda de Clientes — TalentoTech
 
 **Módulo:** Aprendizaje Inteligente | Encuentro 1  
