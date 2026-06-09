@@ -1,20 +1,51 @@
-# 🤖 Predicción de Demanda de Clientes — TalentoTech
+# 🤖 Predicción de Demanda de Clientes — Mundipartes
+### Proyecto TalentoTech | Módulo: Aprendizaje Inteligente | Encuentro 1
 
-**Módulo:** Aprendizaje Inteligente | Encuentro 1  
-**Equipo:** Carolina Marín · Leidy Lorena Montes · John Camargo · Miguel Hernández · Alexandra Orozco · Andrés Restrepo
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/TU_USUARIO/talento-tech-mundipartes/blob/main/prediccion_demanda.ipynb)
 
-## 📌 Problema
-Los asesores comerciales actúan de forma reactiva. Este proyecto usa ML para predecir cuándo y cuánto comprará cada cliente.
+---
 
-## 🧠 Modelos utilizados
-- **Regresión Lineal/Múltiple** → predice volumen de compras futuras
-- **K-Means Clustering** → segmenta clientes por patrones de consumo
+## 👥 Equipo
+| Integrante | Área |
+|---|---|
+| Carolina Marín Cárdenas | Ingeniería de Procesos |
+| Leidy Lorena Montes | Diseño de Modas |
+| John Alexander Camargo Mateus | Ingeniería Industrial |
+| Miguel Hernández Uparela | Ingeniería Electromecánica |
+| Alexandra Orozco Orozco | Psicología |
+| Andrés Restrepo Cristian | Administración de Empresas |
 
-## 📁 Archivos
+---
+
+## 🎯 Problema
+Los asesores comerciales de Mundipartes actúan de forma **reactiva**: esperan que el cliente llame en vez de anticiparse. Esto genera pérdida de ventas y baja fidelización.
+
+## 💡 Solución
+Sistema de ML que transforma la gestión de **reactiva → proactiva** mediante:
+- **K-Means Clustering** → segmenta clientes por potencial de consumo
+- **Regresión Lineal** → predice volumen de compras del siguiente mes
+
+---
+
+## 📁 Archivos del repositorio
 | Archivo | Descripción |
 |---|---|
-| `Demanda_Proyecto_IA.xlsx` | Base de datos histórica de ventas |
-| `prediccion_demanda.ipynb` | Notebook principal en Google Colab |
+| `prediccion_demanda.ipynb` | Notebook principal (EDA + ETL + ML) |
+| `Demanda_Proyecto_IA.xlsx` | Base de datos histórica Jun 2025 – May 2026 |
+| `Proyecto_IA_TalentoTech_Completado.docx` | Documento oficial del proyecto |
+
+---
 
 ## ▶️ Cómo ejecutar
-Abre el notebook en Google Colab con el botón de arriba.
+1. Clic en el botón **Open in Colab** de arriba
+2. En la celda 4, sube el archivo `Demanda_Proyecto_IA.xlsx`
+3. Ejecuta todas las celdas en orden (`Ctrl + F9`)
+
+---
+
+## 🔬 Tecnologías utilizadas
+`Python` · `Pandas` · `Scikit-learn` · `Matplotlib` · `Seaborn` · `Google Colab`
+
+---
+
+*Bogotá, Colombia — TalentoTech 2025*
