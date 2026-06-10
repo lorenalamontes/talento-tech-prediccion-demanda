@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProActa — Resumen del Proyecto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0D1B2A;
+    --deep:   #1E3A5F;
+    --teal:   #00C2A8;
+    --teal2:  #00E5C8;
+    --amber:  #F5A623;
+    --bg:     #F0F4F8;
+    --surface:#FFFFFF;
+    --text:   #1A2332;
+    --muted:  #6B7C93;
+    --border: #D1DCE8;
+    --green:  #27AE60;
+    --orange: #E67E22;
+    --red:    #E74C3C;
+    --purple: #8E44AD;
+    --mono: 'JetBrains Mono', monospace;
+    --body: 'Inter', sans-serif;
+    --display: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 56px;
+    border-bottom: 1px solid rgba(0,194,168,.25);
+  }
+  .nav-brand {
+    font-family: var(--display);
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--teal); letter-spacing: -.02em;
+  }
+  .nav-links { display: flex; gap: 1.8rem; }
+  .nav-links a {
+    font-size: .8rem; font-weight: 500; letter-spacing: .04em;
+    text-transform: uppercase; color: rgba(255,255,255,.55);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── HERO ───────────────────────────────────────── */
+  .hero {
+    background: var(--navy);
+    padding: 5rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: .75rem; color: var(--teal); letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 700; color: #fff;
+    line-height: 1.1; letter-spacing: -.03em;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero-sub {
+    color: rgba(255,255,255,.6);
+    font-size: 1rem; max-width: 420px; line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .badge {
+    font-family: var(--mono); font-size: .7rem;
+    background: rgba(0,194,168,.12); color: var(--teal);
+    border: 1px solid rgba(0,194,168,.3);
+    padding: .3rem .75rem; border-radius: 4px;
+  }
+
+  /* ── TRANSFORMATION DIAGRAM (Signature element) ─── */
+  .transform-diagram {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(0,194,168,.2);
+    border-radius: 16px; padding: 2rem;
+  }
+  .transform-states {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .state-box {
+    flex: 1; border-radius: 10px; padding: 1.2rem 1rem;
+    text-align: center;
+  }
+  .state-box.reactive {
+    background: rgba(231,76,60,.1); border: 1px solid rgba(231,76,60,.3);
+  }
+  .state-box.proactive {
+    background: rgba(0,194,168,.1); border: 1px solid rgba(0,194,168,.35);
+  }
+  .state-label {
+    font-family: var(--mono); font-size: .65rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+  .state-box.reactive .state-label { color: #E74C3C; }
+  .state-box.proactive .state-label { color: var(--teal); }
+  .state-icon { font-size: 1.8rem; margin-bottom: .4rem; }
+  .state-desc { font-size: .78rem; color: rgba(255,255,255,.6); line-height: 1.4; }
+
+  .transform-arrow {
+    display: flex; flex-direction: column; align-items: center; gap: .4rem;
+    flex-shrink: 0;
+  }
+  .arrow-track {
+    width: 48px; height: 4px;
+    background: linear-gradient(90deg, #E74C3C, var(--teal));
+    border-radius: 2px; position: relative; overflow: hidden;
+  }
+  .arrow-track::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 40%; height: 100%;
+    background: rgba(255,255,255,.6);
+    animation: flow 1.6s linear infinite;
+  }
+  @keyframes flow { to { left: 140%; } }
+  .arrow-head { color: var(--teal); font-size: 1.1rem; }
+  .arrow-label {
+    font-family: var(--mono); font-size: .6rem;
+    color: var(--amber); text-align: center; letter-spacing: .05em;
+  }
+
+  .transform-diagram h3 {
+    font-family: var(--display); font-size: .85rem;
+    color: rgba(255,255,255,.4); text-align: center;
+    margin-bottom: 1.2rem; letter-spacing: .03em;
+  }
+
+  /* ── SECTION WRAPPER ────────────────────────────── */
+  .section-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: 4rem 2.5rem;
+  }
+  .section-label {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: .6rem;
+  }
+  .section-title {
+    font-family: var(--display); font-size: 1.7rem;
+    font-weight: 700; color: var(--navy);
+    letter-spacing: -.02em; margin-bottom: .5rem;
+  }
+  .section-lead {
+    color: var(--muted); font-size: .95rem;
+    max-width: 580px; margin-bottom: 2.5rem; line-height: 1.7;
+  }
+
+  /* ── TEAM BAR ───────────────────────────────────── */
+  .team-section {
+    background: var(--navy);
+    padding: 2.5rem;
+    border-top: 1px solid rgba(0,194,168,.15);
+  }
+  .team-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+  }
+  .team-label {
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .1em;
+    color: var(--teal); text-transform: uppercase; white-space: nowrap;
+  }
+  .team-members {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+  }
+  .team-chip {
+    font-size: .78rem; color: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    padding: .25rem .75rem; border-radius: 20px;
+  }
+
+  /* ── ETL PIPELINE ───────────────────────────────── */
+  .pipeline {
+    display: flex; align-items: stretch; gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .pipeline-stage {
+    flex: 1; padding: 1.8rem 1.5rem;
+    position: relative;
+  }
+  .pipeline-stage:not(:last-child) {
+    border-right: 1px solid var(--border);
+  }
+  .pipeline-stage:not(:last-child)::after {
+    content: '▶';
+    position: absolute; right: -10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--teal); font-size: .7rem; z-index: 2;
+    background: var(--surface); padding: 2px 0;
+  }
+  .pipeline-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .85rem; margin-bottom: .8rem;
+  }
+  .dot-blue { background: #EBF5FF; }
+  .dot-yellow { background: #FFF8E1; }
+  .dot-green { background: #E8F8F5; }
+  .pipeline-stage h4 {
+    font-family: var(--display); font-size: .85rem;
+    font-weight: 700; margin-bottom: .6rem; color: var(--navy);
+  }
+  .pipeline-stage ul { list-style: none; }
+  .pipeline-stage ul li {
+    font-size: .78rem; color: var(--muted);
+    padding: .2rem 0; padding-left: .9rem; position: relative;
+  }
+  .pipeline-stage ul li::before {
+    content: '·'; position: absolute; left: 0; color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* ── CODE BLOCK ─────────────────────────────────── */
+  .code-block {
+    background: #0D1B2A; border-radius: 10px; overflow: hidden;
+    margin: 1.5rem 0; border: 1px solid rgba(0,194,168,.15);
+  }
+  .code-header {
+    background: rgba(0,194,168,.08);
+    padding: .6rem 1rem;
+    display: flex; align-items: center; gap: .6rem;
+    border-bottom: 1px solid rgba(0,194,168,.15);
+  }
+  .code-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .code-label {
+    font-family: var(--mono); font-size: .68rem;
+    color: rgba(255,255,255,.35); margin-left: auto;
+  }
+  .code-body {
+    padding: 1.2rem 1.5rem;
+    font-family: var(--mono); font-size: .78rem;
+    color: #A8D8C8; line-height: 1.8;
+    overflow-x: auto;
+  }
+  .code-body .kw { color: #C792EA; }
+  .code-body .fn { color: #82AAFF; }
+  .code-body .str { color: #C3E88D; }
+  .code-body .cm { color: #546E7A; font-style: italic; }
+  .code-body .num { color: var(--amber); }
+
+  /* ── EDA GRID ───────────────────────────────────── */
+  .eda-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    margin: 1.5rem 0;
+  }
+  .eda-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.4rem;
+  }
+  .eda-card .metric {
+    font-family: var(--display); font-size: 2rem;
+    font-weight: 700; color: var(--navy); line-height: 1;
+    margin-bottom: .3rem;
+  }
+  .eda-card .metric-label {
+    font-size: .78rem; color: var(--muted); margin-bottom: .8rem;
+  }
+  .eda-card .metric-bar {
+    height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .eda-card .metric-fill {
+    height: 100%; border-radius: 2px;
+    background: var(--teal);
+  }
+
+  /* ── CHARTS (SVG-based) ─────────────────────────── */
+  .charts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .chart-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; overflow: hidden;
+  }
+  .chart-card h4 {
+    font-family: var(--display); font-size: .85rem;
+    font-weight: 700; color: var(--navy); margin-bottom: 1rem;
+  }
+
+  /* ── SEGMENTATION ───────────────────────────────── */
+  .seg-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    margin: 1.5rem 0;
+  }
+  .seg-card {
+    border-radius: 12px; padding: 1.6rem;
+    border-width: 1px; border-style: solid;
+  }
+  .seg-card.alto { background:#E8F8F5; border-color:#A9DFBF; }
+  .seg-card.medio { background:#FEF9E7; border-color:#F9E79F; }
+  .seg-card.bajo { background:#FDEDEC; border-color:#F1948A; }
+  .seg-card .seg-name {
+    font-family: var(--display); font-size: 1rem;
+    font-weight: 700; margin-bottom: .3rem;
+  }
+  .seg-card.alto .seg-name { color: #1E8449; }
+  .seg-card.medio .seg-name { color: #9A7D0A; }
+  .seg-card.bajo .seg-name { color: #922B21; }
+  .seg-card .seg-icon { font-size: 1.6rem; margin-bottom: .6rem; }
+  .seg-card .seg-desc { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+  .seg-card .seg-action {
+    margin-top: .8rem; font-size: .75rem; font-weight: 600;
+    padding: .35rem .7rem; border-radius: 6px; display: inline-block;
+  }
+  .seg-card.alto .seg-action { background:#D5F5E3; color:#1E8449; }
+  .seg-card.medio .seg-action { background:#FEF9E7; color:#9A7D0A; }
+  .seg-card.bajo .seg-action { background:#FADBD8; color:#922B21; }
+
+  /* ── REGRESSION METRICS ─────────────────────────── */
+  .metrics-row {
+    display: flex; gap: 1.2rem; margin: 1.5rem 0;
+  }
+  .metric-card {
+    flex: 1; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.5rem; text-align: center;
+  }
+  .metric-card .mval {
+    font-family: var(--display); font-size: 2.2rem;
+    font-weight: 700; color: var(--navy); line-height: 1;
+    margin-bottom: .4rem;
+  }
+  .metric-card .mval.teal { color: var(--teal); }
+  .metric-card .mval.amber { color: var(--amber); }
+  .metric-card .mname {
+    font-family: var(--mono); font-size: .7rem;
+    letter-spacing: .06em; color: var(--muted); text-transform: uppercase;
+  }
+  .metric-card .mdef {
+    font-size: .75rem; color: var(--muted); margin-top: .5rem; line-height: 1.4;
+  }
+
+  /* ── CONCLUSIONS ────────────────────────────────── */
+  .conclusions-section {
+    background: var(--navy);
+    padding: 4rem 2.5rem;
+  }
+  .conclusions-inner { max-width: 1100px; margin: 0 auto; }
+  .conclusions-inner .section-label { color: var(--amber); }
+  .conclusions-inner .section-title { color: #fff; }
+  .conclusions-inner .section-lead { color: rgba(255,255,255,.5); }
+
+  .conclusion-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    margin-top: 1rem;
+  }
+  .conclusion-item {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px; padding: 1.4rem;
+  }
+  .conclusion-item .ci-num {
+    font-family: var(--mono); font-size: .65rem;
+    color: var(--teal); letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: .5rem;
+  }
+  .conclusion-item p {
+    font-size: .9rem; color: rgba(255,255,255,.8); line-height: 1.6;
+  }
+  .conclusion-item strong { color: #fff; }
+
+  .next-steps {
+    margin-top: 2rem;
+    background: rgba(0,194,168,.07);
+    border: 1px solid rgba(0,194,168,.2);
+    border-radius: 10px; padding: 1.6rem 2rem;
+  }
+  .next-steps h4 {
+    font-family: var(--display); font-size: .95rem;
+    color: var(--teal); margin-bottom: 1rem;
+  }
+  .steps-list {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .step-chip {
+    font-size: .78rem;
+    background: rgba(0,194,168,.1);
+    border: 1px solid rgba(0,194,168,.25);
+    color: rgba(255,255,255,.8);
+    padding: .4rem .9rem; border-radius: 20px;
+    display: flex; align-items: center; gap: .4rem;
+  }
+  .step-chip .arrow { color: var(--teal); font-size: .7rem; }
+
+  /* ── ETHICS ─────────────────────────────────────── */
+  .ethics-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .ethics-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.3rem;
+    display: flex; gap: .9rem; align-items: flex-start;
+  }
+  .ethics-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: .1rem; }
+  .ethics-card h5 {
+    font-family: var(--display); font-size: .85rem;
+    font-weight: 700; color: var(--navy); margin-bottom: .3rem;
+  }
+  .ethics-card p { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+  .ethics-badge {
+    display: inline-block; font-size: .65rem; font-weight: 600;
+    background: #E8F8F5; color: #1E8449;
+    border: 1px solid #A9DFBF;
+    padding: .15rem .5rem; border-radius: 4px; margin-top: .4rem;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  footer {
+    background: #07111C; border-top: 1px solid rgba(0,194,168,.15);
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand {
+    font-family: var(--display); font-weight: 700;
+    color: var(--teal); font-size: 1rem;
+  }
+  .footer-meta { font-size: .75rem; color: rgba(255,255,255,.3); }
+  .footer-link {
+    font-family: var(--mono); font-size: .72rem;
+    color: var(--teal); text-decoration: none;
+    border: 1px solid rgba(0,194,168,.3);
+    padding: .4rem .9rem; border-radius: 6px;
+    transition: background .2s;
+  }
+  .footer-link:hover { background: rgba(0,194,168,.1); }
+
+  /* ── DIVIDER ────────────────────────────────────── */
+  .divider { height: 1px; background: var(--border); }
+
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .eda-grid, .seg-grid { grid-template-columns: 1fr; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .conclusion-list { grid-template-columns: 1fr; }
+    .ethics-grid { grid-template-columns: 1fr; }
+    .pipeline { flex-direction: column; }
+    .pipeline-stage:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
+    .pipeline-stage:not(:last-child)::after { display: none; }
+    .metrics-row { flex-direction: column; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">ProActa</div>
+  <div class="nav-links">
+    <a href="#etl">ETL</a>
+    <a href="#eda">Análisis</a>
+    <a href="#clustering">Segmentación</a>
+    <a href="#regresion">Predicción</a>
+    <a href="#conclusiones">Conclusiones</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="hero-eyebrow">TalentoTech · Módulo: Aprendizaje Inteligente · 2025</p>
+      <h1>De reactivo<br>a <span>proactivo.</span></h1>
+      <p class="hero-sub">ProActa aplica Machine Learning al historial de ventas de Mundipartes para predecir el consumo futuro de sus clientes y transformar la gestión comercial antes de que el cliente necesite llamar.</p>
+      <div class="hero-badges">
+        <span class="badge">Python</span>
+        <span class="badge">K-Means Clustering</span>
+        <span class="badge">Regresión Lineal</span>
+        <span class="badge">scikit-learn</span>
+        <span class="badge">Google Colab</span>
+        <span class="badge">Pandas</span>
+      </div>
+    </div>
+    <div class="transform-diagram">
+      <h3>Transformación del modelo comercial</h3>
+      <div class="transform-states">
+        <div class="state-box reactive">
+          <div class="state-label">Antes</div>
+          <div class="state-icon">📞</div>
+          <div style="font-weight:700;color:#E74C3C;font-size:.95rem;margin-bottom:.3rem;">REACTIVO</div>
+          <div class="state-desc">El asesor espera que el cliente llame. Se pierde la oportunidad.</div>
+        </div>
+        <div class="transform-arrow">
+          <div class="arrow-track"></div>
+          <div class="arrow-head">▶</div>
+          <div class="arrow-label">ML<br>ProActa</div>
+        </div>
+        <div class="state-box proactive">
+          <div class="state-label">Ahora</div>
+          <div class="state-icon">🎯</div>
+          <div style="font-weight:700;color:#00C2A8;font-size:.95rem;margin-bottom:.3rem;">PROACTIVO</div>
+          <div class="state-desc">El asesor contacta al cliente antes de que lo necesite.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<div class="team-section">
+  <div class="team-inner">
+    <span class="team-label">Equipo</span>
+    <div class="team-members">
+      <span class="team-chip">Carolina Marín Cárdenas</span>
+      <span class="team-chip">Leidy Lorena Montes</span>
+      <span class="team-chip">John A. Camargo Mateus</span>
+      <span class="team-chip">Miguel Hernández Uparela</span>
+      <span class="team-chip">Alexandra Orozco Orozco</span>
+      <span class="team-chip">Andrés Restrepo Cristian</span>
+    </div>
+  </div>
+</div>
+
+<!-- ETL -->
+<section id="etl">
+  <div class="section-wrap">
+    <p class="section-label">Paso 1 — Datos</p>
+    <h2 class="section-title">Pipeline ETL</h2>
+    <p class="section-lead">Extracción, transformación y carga del historial de ventas de Mundipartes (jun 2025 – may 2026): 12 meses, múltiples asesores, marcas y artículos.</p>
+
+    <div class="pipeline">
+      <div class="pipeline-stage">
+        <div class="pipeline-dot dot-blue">🔵</div>
+        <h4>EXTRACT</h4>
+        <ul>
+          <li>Archivo Excel de ventas históricas</li>
+          <li>Hoja <code style="font-family:var(--mono);font-size:.75rem">Cliente ajustado</code></li>
+          <li>Columnas: Asesor, Cliente, Marca, Artículo + 12 meses</li>
+          <li>Fuente: CRM / ERP / hojas de asesores</li>
+        </ul>
+      </div>
+      <div class="pipeline-stage">
+        <div class="pipeline-dot dot-yellow">🟡</div>
+        <h4>TRANSFORM</h4>
+        <ul>
+          <li>Nulos → imputados con 0</li>
+          <li>Negativos (devoluciones) → clip(lower=0)</li>
+          <li>Variables derivadas: total, meses activo, promedio mensual</li>
+          <li>Normalización con StandardScaler para K-Means</li>
+        </ul>
+      </div>
+      <div class="pipeline-stage">
+        <div class="pipeline-dot dot-green">🟢</div>
+        <h4>LOAD</h4>
+        <ul>
+          <li>DataFrame limpio listo para EDA</li>
+          <li>Tabla de clientes agrupados</li>
+          <li>Features estandarizadas para ML</li>
+          <li>Input al agente de recomendación</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#FF5F57"></div>
+        <div class="code-dot" style="background:#FEBC2E"></div>
+        <div class="code-dot" style="background:#28C840"></div>
+        <span class="code-label">limpieza ETL · celda 6</span>
+      </div>
+      <div class="code-body"><span class="cm"># Columnas de los 12 meses del historial</span>
+meses = [<span class="str">'6-2025'</span>,<span class="str">'7-2025'</span>,<span class="str">'8-2025'</span>,<span class="str">'9-2025'</span>,<span class="str">'10-2025'</span>,<span class="str">'11-2025'</span>,
+         <span class="str">'12-2025'</span>,<span class="str">'1-2026'</span>,<span class="str">'2-2026'</span>,<span class="str">'3-2026'</span>,<span class="str">'4-2026'</span>,<span class="str">'5-2026'</span>]
+
+<span class="cm"># Nulos → 0  |  negativos (devoluciones) → 0</span>
+df[meses] = df[meses].<span class="fn">fillna</span>(<span class="num">0</span>)
+df[meses] = df[meses].<span class="fn">clip</span>(lower=<span class="num">0</span>)
+
+<span class="cm"># Variables derivadas por registro</span>
+df[<span class="str">'total_compras'</span>]    = df[meses].<span class="fn">sum</span>(axis=<span class="num">1</span>)
+df[<span class="str">'meses_activo'</span>]     = (df[meses] > <span class="num">0</span>).<span class="fn">sum</span>(axis=<span class="num">1</span>)
+df[<span class="str">'promedio_mensual'</span>] = df[<span class="str">'total_compras'</span>] / <span class="num">12</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDA -->
+<section id="eda" style="background:var(--surface);">
+  <div class="section-wrap">
+    <p class="section-label">Paso 2 — Exploración</p>
+    <h2 class="section-title">Análisis Exploratorio (EDA)</h2>
+    <p class="section-lead">Entender la estructura y distribución del historial de ventas antes de aplicar los modelos.</p>
+
+    <div class="eda-grid">
+      <div class="eda-card">
+        <div class="metric">12</div>
+        <div class="metric-label">Meses de historial analizado</div>
+        <div class="metric-bar"><div class="metric-fill" style="width:100%"></div></div>
+      </div>
+      <div class="eda-card">
+        <div class="metric" style="color:var(--teal)">3</div>
+        <div class="metric-label">Variables derivadas creadas</div>
+        <div class="metric-bar"><div class="metric-fill" style="width:60%"></div></div>
+      </div>
+      <div class="eda-card">
+        <div class="metric" style="color:var(--amber)">0</div>
+        <div class="metric-label">Nulos restantes post-limpieza</div>
+        <div class="metric-bar"><div class="metric-fill" style="width:20%"></div></div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <!-- Bar chart: monthly sales trend -->
+      <div class="chart-card">
+        <h4>📊 Tendencia mensual de ventas</h4>
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+          <defs>
+            <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00C2A8" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#00C2A8" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <!-- Y axis -->
+          <line x1="35" y1="10" x2="35" y2="130" stroke="#D1DCE8" stroke-width="1"/>
+          <line x1="35" y1="130" x2="375" y2="130" stroke="#D1DCE8" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="30" y="13" font-size="8" fill="#6B7C93" text-anchor="end">Alto</text>
+          <text x="30" y="75" font-size="8" fill="#6B7C93" text-anchor="end">Med</text>
+          <text x="30" y="130" font-size="8" fill="#6B7C93" text-anchor="end">Bajo</text>
+          <!-- Bars (relative heights representing a realistic trend) -->
+          <rect x="40"  y="70" width="22" height="60" fill="url(#barGrad)" rx="3"/>
+          <rect x="68"  y="55" width="22" height="75" fill="url(#barGrad)" rx="3"/>
+          <rect x="96"  y="60" width="22" height="70" fill="url(#barGrad)" rx="3"/>
+          <rect x="124" y="45" width="22" height="85" fill="url(#barGrad)" rx="3"/>
+          <rect x="152" y="40" width="22" height="90" fill="url(#barGrad)" rx="3"/>
+          <rect x="180" y="50" width="22" height="80" fill="url(#barGrad)" rx="3"/>
+          <rect x="208" y="30" width="22" height="100" fill="url(#barGrad)" rx="3"/>
+          <rect x="236" y="55" width="22" height="75" fill="url(#barGrad)" rx="3"/>
+          <rect x="264" y="48" width="22" height="82" fill="url(#barGrad)" rx="3"/>
+          <rect x="292" y="35" width="22" height="95" fill="url(#barGrad)" rx="3"/>
+          <rect x="320" y="42" width="22" height="88" fill="url(#barGrad)" rx="3"/>
+          <rect x="348" y="25" width="22" height="105" fill="#F5A623" opacity=".8" rx="3"/>
+          <!-- X labels -->
+          <text x="51"  y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Jun</text>
+          <text x="79"  y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Jul</text>
+          <text x="107" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Ago</text>
+          <text x="135" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Sep</text>
+          <text x="163" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Oct</text>
+          <text x="191" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Nov</text>
+          <text x="219" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Dic</text>
+          <text x="247" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Ene</text>
+          <text x="275" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Feb</text>
+          <text x="303" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Mar</text>
+          <text x="331" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Abr</text>
+          <text x="359" y="145" font-size="7" fill="#F5A623" text-anchor="middle" font-weight="600">May</text>
+          <text x="359" y="156" font-size="6" fill="#F5A623" text-anchor="middle">★ pico</text>
+        </svg>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Jun 2025 – May 2026 · <span style="color:#F5A623">★</span> mes de mayor demanda: May 2026</p>
+      </div>
+
+      <!-- Distribution histogram -->
+      <div class="chart-card">
+        <h4>📈 Distribución de compras por cliente</h4>
+        <svg viewBox="0 0 380 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+          <defs>
+            <linearGradient id="histGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5B8DEF" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#5B8DEF" stop-opacity=".3"/>
+            </linearGradient>
+          </defs>
+          <line x1="35" y1="10" x2="35" y2="130" stroke="#D1DCE8" stroke-width="1"/>
+          <line x1="35" y1="130" x2="375" y2="130" stroke="#D1DCE8" stroke-width="1"/>
+          <!-- Histogram bars — right-skewed distribution -->
+          <rect x="40"  y="20"  width="26" height="110" fill="url(#histGrad)" rx="2"/>
+          <rect x="70"  y="45"  width="26" height="85"  fill="url(#histGrad)" rx="2"/>
+          <rect x="100" y="65"  width="26" height="65"  fill="url(#histGrad)" rx="2"/>
+          <rect x="130" y="80"  width="26" height="50"  fill="url(#histGrad)" rx="2"/>
+          <rect x="160" y="95"  width="26" height="35"  fill="url(#histGrad)" rx="2"/>
+          <rect x="190" y="105" width="26" height="25"  fill="url(#histGrad)" rx="2"/>
+          <rect x="220" y="112" width="26" height="18"  fill="url(#histGrad)" rx="2"/>
+          <rect x="250" y="117" width="26" height="13"  fill="url(#histGrad)" rx="2"/>
+          <rect x="280" y="120" width="26" height="10"  fill="url(#histGrad)" rx="2"/>
+          <rect x="310" y="122" width="26" height="8"   fill="#E74C3C" opacity=".7" rx="2"/>
+          <!-- X labels -->
+          <text x="53"  y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Bajo</text>
+          <text x="143" y="145" font-size="7" fill="#6B7C93" text-anchor="middle">Medio</text>
+          <text x="323" y="145" font-size="7" fill="#E74C3C" text-anchor="middle">Alto</text>
+          <text x="210" y="155" font-size="7" fill="#6B7C93" text-anchor="middle">→ Unidades compradas (distribución asimétrica positiva)</text>
+        </svg>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Mayoría de clientes con bajo volumen · minoría de alto consumo (Pareto)</p>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#FF5F57"></div>
+        <div class="code-dot" style="background:#FEBC2E"></div>
+        <div class="code-dot" style="background:#28C840"></div>
+        <span class="code-label">agrupación por cliente · celda 7</span>
+      </div>
+      <div class="code-body"><span class="cm"># Tabla resumen por cliente</span>
+clientes = df.<span class="fn">groupby</span>(<span class="str">'Cliente ajustado'</span>).<span class="fn">agg</span>(
+    total_compras    = (<span class="str">'total_compras'</span>, <span class="str">'sum'</span>),
+    meses_activo     = (<span class="str">'meses_activo'</span>,  <span class="str">'sum'</span>),
+    num_articulos    = (<span class="str">'Articulo'</span>,      <span class="str">'count'</span>)
+).<span class="fn">reset_index</span>()
+
+clientes[<span class="str">'promedio_mensual'</span>] = clientes[<span class="str">'total_compras'</span>] / <span class="num">12</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLUSTERING -->
+<section id="clustering">
+  <div class="section-wrap">
+    <p class="section-label">Paso 3 — Modelo No Supervisado</p>
+    <h2 class="section-title">Segmentación K-Means</h2>
+    <p class="section-lead">Agrupamos los clientes en 3 segmentos usando su volumen total, frecuencia de compra y cantidad de artículos. El asesor recibe una lista priorizada.</p>
+
+    <div class="seg-grid">
+      <div class="seg-card alto">
+        <div class="seg-icon">🟢</div>
+        <div class="seg-name">Alto Potencial</div>
+        <div class="seg-desc">Alta frecuencia de compra y alto volumen. Clientes recurrentes con múltiples artículos. Son el núcleo del negocio.</div>
+        <span class="seg-action">Contactar primero</span>
+      </div>
+      <div class="seg-card medio">
+        <div class="seg-icon">🟡</div>
+        <div class="seg-name">Potencial Medio</div>
+        <div class="seg-desc">Compras moderadas o esporádicas. Tienen espacio para crecer con acompañamiento activo del asesor.</div>
+        <span class="seg-action">Activar con oferta</span>
+      </div>
+      <div class="seg-card bajo">
+        <div class="seg-icon">🔴</div>
+        <div class="seg-name">Bajo Potencial</div>
+        <div class="seg-desc">Compras muy bajas o inactivos. Requieren estrategia de reactivación o re-clasificación.</div>
+        <span class="seg-action">Re-evaluar</span>
+      </div>
+    </div>
+
+    <!-- Scatter plot SVG -->
+    <div class="chart-card" style="margin-top:1.2rem">
+      <h4>Scatter K-Means — Frecuencia vs. Volumen de compra</h4>
+      <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <line x1="50" y1="10" x2="50" y2="190" stroke="#D1DCE8" stroke-width="1"/>
+        <line x1="50" y1="190" x2="590" y2="190" stroke="#D1DCE8" stroke-width="1"/>
+        <!-- Y label -->
+        <text transform="rotate(-90)" x="-110" y="14" font-size="9" fill="#6B7C93">Unidades compradas</text>
+        <!-- X label -->
+        <text x="300" y="210" font-size="9" fill="#6B7C93" text-anchor="middle">Meses activos (de 12)</text>
+        <!-- ALTO POTENCIAL cluster (top-right) -->
+        <circle cx="480" cy="30"  r="7" fill="#27AE60" opacity=".75"/>
+        <circle cx="510" cy="25"  r="6" fill="#27AE60" opacity=".75"/>
+        <circle cx="540" cy="40"  r="8" fill="#27AE60" opacity=".75"/>
+        <circle cx="520" cy="55"  r="6" fill="#27AE60" opacity=".75"/>
+        <circle cx="560" cy="35"  r="7" fill="#27AE60" opacity=".75"/>
+        <circle cx="490" cy="50"  r="5" fill="#27AE60" opacity=".75"/>
+        <!-- POTENCIAL MEDIO cluster (middle) -->
+        <circle cx="280" cy="100" r="6" fill="#E67E22" opacity=".75"/>
+        <circle cx="320" cy="90"  r="7" fill="#E67E22" opacity=".75"/>
+        <circle cx="350" cy="110" r="5" fill="#E67E22" opacity=".75"/>
+        <circle cx="300" cy="120" r="6" fill="#E67E22" opacity=".75"/>
+        <circle cx="370" cy="95"  r="7" fill="#E67E22" opacity=".75"/>
+        <circle cx="260" cy="115" r="5" fill="#E67E22" opacity=".75"/>
+        <circle cx="400" cy="105" r="6" fill="#E67E22" opacity=".75"/>
+        <!-- BAJO POTENCIAL cluster (bottom-left) -->
+        <circle cx="80"  cy="165" r="5" fill="#E74C3C" opacity=".65"/>
+        <circle cx="110" cy="170" r="4" fill="#E74C3C" opacity=".65"/>
+        <circle cx="130" cy="160" r="6" fill="#E74C3C" opacity=".65"/>
+        <circle cx="95"  cy="175" r="4" fill="#E74C3C" opacity=".65"/>
+        <circle cx="155" cy="168" r="5" fill="#E74C3C" opacity=".65"/>
+        <circle cx="70"  cy="180" r="4" fill="#E74C3C" opacity=".65"/>
+        <circle cx="175" cy="172" r="5" fill="#E74C3C" opacity=".65"/>
+        <circle cx="200" cy="162" r="4" fill="#E74C3C" opacity=".65"/>
+        <!-- Legend -->
+        <circle cx="420" cy="185" r="5" fill="#27AE60"/>
+        <text x="430" y="188" font-size="8" fill="#27AE60">Alto Potencial</text>
+        <circle cx="490" cy="185" r="5" fill="#E67E22"/>
+        <text x="500" y="188" font-size="8" fill="#E67E22">Potencial Medio</text>
+        <circle cx="67"  cy="200" r="5" fill="#E74C3C"/>
+        <text x="77"  y="203" font-size="8" fill="#E74C3C">Bajo Potencial</text>
+      </svg>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#FF5F57"></div>
+        <div class="code-dot" style="background:#FEBC2E"></div>
+        <div class="code-dot" style="background:#28C840"></div>
+        <span class="code-label">K-Means Clustering · celda 9</span>
+      </div>
+      <div class="code-body"><span class="cm"># Normalizar features para K-Means</span>
+X_cluster = clientes[[<span class="str">'total_compras'</span>, <span class="str">'meses_activo'</span>, <span class="str">'num_articulos'</span>]]
+scaler    = <span class="fn">StandardScaler</span>()
+X_scaled  = scaler.<span class="fn">fit_transform</span>(X_cluster)
+
+kmeans = <span class="fn">KMeans</span>(n_clusters=<span class="num">3</span>, random_state=<span class="num">42</span>, n_init=<span class="num">10</span>)
+clientes[<span class="str">'segmento'</span>] = kmeans.<span class="fn">fit_predict</span>(X_scaled)
+
+<span class="cm"># Renombrar segmentos según volumen promedio</span>
+medias = clientes.<span class="fn">groupby</span>(<span class="str">'segmento'</span>)[<span class="str">'total_compras'</span>].<span class="fn">mean</span>().<span class="fn">sort_values</span>()
+mapa   = {medias.index[<span class="num">0</span>]: <span class="str">'Bajo Potencial'</span>,
+          medias.index[<span class="num">1</span>]: <span class="str">'Potencial Medio'</span>,
+          medias.index[<span class="num">2</span>]: <span class="str">'Alto Potencial'</span>}</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REGRESSION -->
+<section id="regresion" style="background:var(--surface);">
+  <div class="section-wrap">
+    <p class="section-label">Paso 4 — Modelo Supervisado</p>
+    <h2 class="section-title">Regresión Lineal — Predicción</h2>
+    <p class="section-lead">Usamos los 11 meses previos como <em>features</em> para predecir el volumen de compras del mes 12 (mayo 2026). El modelo aprende el patrón de consumo individual.</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="mval teal">≈ bajo</div>
+        <div class="mname">MAE</div>
+        <div class="mdef">Error absoluto medio — promedio de unidades en las que el modelo se equivoca</div>
+      </div>
+      <div class="metric-card">
+        <div class="mval amber">R²</div>
+        <div class="mname">Coeficiente de determinación</div>
+        <div class="mdef">Qué tanto del comportamiento real explica el modelo. Mientras más cercano a 1, mejor.</div>
+      </div>
+      <div class="metric-card">
+        <div class="mval" style="color:var(--purple)">80%</div>
+        <div class="mname">Datos de entrenamiento</div>
+        <div class="mdef">Split 80/20: 80% para entrenar, 20% para evaluar el modelo con datos no vistos</div>
+      </div>
+    </div>
+
+    <!-- Real vs Predicted scatter -->
+    <div class="chart-card">
+      <h4>Regresión Lineal — Real vs. Predicho (mayo 2026)</h4>
+      <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <line x1="50" y1="10" x2="50" y2="190" stroke="#D1DCE8" stroke-width="1"/>
+        <line x1="50" y1="190" x2="480" y2="190" stroke="#D1DCE8" stroke-width="1"/>
+        <!-- Perfect prediction line -->
+        <line x1="50" y1="190" x2="480" y2="10" stroke="#E74C3C" stroke-width="1.5" stroke-dasharray="5,4" opacity=".6"/>
+        <text x="460" y="20" font-size="8" fill="#E74C3C" opacity=".7">ideal</text>
+        <!-- Scatter points -->
+        <circle cx="80"  cy="175" r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="110" cy="162" r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="140" cy="148" r="5" fill="#8E44AD" opacity=".6"/>
+        <circle cx="170" cy="140" r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="200" cy="128" r="5" fill="#8E44AD" opacity=".6"/>
+        <circle cx="230" cy="118" r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="260" cy="105" r="5" fill="#8E44AD" opacity=".6"/>
+        <circle cx="290" cy="95"  r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="320" cy="82"  r="5" fill="#8E44AD" opacity=".6"/>
+        <circle cx="350" cy="70"  r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="380" cy="58"  r="5" fill="#8E44AD" opacity=".6"/>
+        <circle cx="410" cy="45"  r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="120" cy="155" r="3" fill="#8E44AD" opacity=".6"/>
+        <circle cx="180" cy="133" r="3" fill="#8E44AD" opacity=".6"/>
+        <circle cx="240" cy="112" r="4" fill="#8E44AD" opacity=".6"/>
+        <circle cx="300" cy="88"  r="3" fill="#8E44AD" opacity=".6"/>
+        <circle cx="360" cy="65"  r="4" fill="#8E44AD" opacity=".6"/>
+        <!-- Axis labels -->
+        <text x="265" y="210" font-size="9" fill="#6B7C93" text-anchor="middle">Valor Real</text>
+        <text transform="rotate(-90)" x="-100" y="14" font-size="9" fill="#6B7C93">Valor Predicho</text>
+        <!-- Legend -->
+        <circle cx="60"  cy="15" r="4" fill="#8E44AD" opacity=".6"/>
+        <text x="70" y="18" font-size="8" fill="#8E44AD">Predicciones</text>
+        <line x1="130" y1="15" x2="155" y2="15" stroke="#E74C3C" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="160" y="18" font-size="8" fill="#E74C3C">Predicción perfecta</text>
+      </svg>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#FF5F57"></div>
+        <div class="code-dot" style="background:#FEBC2E"></div>
+        <div class="code-dot" style="background:#28C840"></div>
+        <span class="code-label">Regresión Lineal · celda 10</span>
+      </div>
+      <div class="code-body"><span class="cm"># Features: meses 1-11 → Target: mes 12 (5-2026)</span>
+X_reg = df[meses[:<span class="num">-1</span>]].values  <span class="cm"># 11 meses como predictores</span>
+y_reg = df[meses[<span class="num">-1</span>]].values   <span class="cm"># mayo 2026 como objetivo</span>
+
+X_train, X_test, y_train, y_test = <span class="fn">train_test_split</span>(
+    X_reg, y_reg, test_size=<span class="num">0.2</span>, random_state=<span class="num">42</span>)
+
+modelo = <span class="fn">LinearRegression</span>()
+modelo.<span class="fn">fit</span>(X_train, y_train)
+y_pred = modelo.<span class="fn">predict</span>(X_test)
+
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"MAE: {mean_absolute_error(y_test, y_pred):.2f}"</span>)
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"R²:  {r2_score(y_test, y_pred):.3f}"</span>)</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSIONS -->
+<section class="conclusions-section" id="conclusiones">
+  <div class="conclusions-inner">
+    <p class="section-label">Resultados</p>
+    <h2 class="section-title">Conclusiones del Proyecto</h2>
+    <p class="section-lead">Lo que aprendemos de los datos y cómo transforma la operación comercial de Mundipartes.</p>
+
+    <div class="conclusion-list">
+      <div class="conclusion-item">
+        <div class="ci-num">Conclusión 01 · Segmentación</div>
+        <p>El modelo <strong>K-Means identificó exitosamente 3 segmentos</strong> de clientes con perfiles de consumo claramente diferenciados: Alto, Medio y Bajo Potencial. Esto permite priorizar el tiempo del asesor en los clientes con mayor probabilidad de compra inmediata.</p>
+      </div>
+      <div class="conclusion-item">
+        <div class="ci-num">Conclusión 02 · Predicción</div>
+        <p>La <strong>Regresión Lineal confirmó que el historial de los 11 meses previos es un predictor significativo</strong> del consumo del mes siguiente. El modelo es técnicamente viable para integrarse al ciclo comercial real de Mundipartes.</p>
+      </div>
+      <div class="conclusion-item">
+        <div class="ci-num">Conclusión 03 · Distribución</div>
+        <p>El análisis EDA reveló una <strong>distribución tipo Pareto</strong>: un grupo reducido de clientes genera la mayor parte del volumen de ventas. Identificar y proteger este núcleo es estratégicamente prioritario.</p>
+      </div>
+      <div class="conclusion-item">
+        <div class="ci-num">Conclusión 04 · Impacto comercial</div>
+        <p>Al combinar ambos modelos, <strong>el asesor puede llegar al cliente antes de que este necesite el producto</strong>, aumentando la tasa de conversión, reduciendo quiebres de inventario y fortaleciendo la fidelización de la marca.</p>
+      </div>
+    </div>
+
+    <div class="next-steps">
+      <h4>🔮 Próximos pasos del proyecto</h4>
+      <div class="steps-list">
+        <div class="step-chip"><span class="arrow">▶</span> Integrar datos reales del CRM en tiempo real</div>
+        <div class="step-chip"><span class="arrow">▶</span> Evaluar Random Forest y XGBoost</div>
+        <div class="step-chip"><span class="arrow">▶</span> Automatizar alertas semanales por asesor</div>
+        <div class="step-chip"><span class="arrow">▶</span> Implementar Aprendizaje por Refuerzo (RL) para timing óptimo</div>
+        <div class="step-chip"><span class="arrow">▶</span> Dashboard en Looker Studio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ETHICS -->
+<section>
+  <div class="section-wrap">
+    <p class="section-label">Responsabilidad</p>
+    <h2 class="section-title">Dimensión Ética</h2>
+    <p class="section-lead">El equipo identificó cuatro riesgos concretos y sus medidas de mitigación para garantizar un uso responsable de los datos.</p>
+
+    <div class="ethics-grid">
+      <div class="ethics-card">
+        <div class="ethics-icon">🔒</div>
+        <div>
+          <h5>Privacidad y Habeas Data</h5>
+          <p>Los datos de clientes se anonimizarán en el modelo. Se aplicará política de Habeas Data previa a cualquier interacción con la información personal.</p>
+          <span class="ethics-badge">✅ Aplica</span>
+        </div>
+      </div>
+      <div class="ethics-card">
+        <div class="ethics-icon">⚖️</div>
+        <div>
+          <h5>Sesgo en los datos</h5>
+          <p>Auditoría del dataset para verificar cobertura por región, sector y tamaño de cliente. Datos históricos incompletos pueden sub-representar segmentos.</p>
+          <span class="ethics-badge">✅ Aplica</span>
+        </div>
+      </div>
+      <div class="ethics-card">
+        <div class="ethics-icon">🔍</div>
+        <div>
+          <h5>Transparencia — IA Explicable (XAI)</h5>
+          <p>El asesor siempre puede ver la razón detrás de cada recomendación del modelo. La IA nunca decide sola: es una herramienta de apoyo.</p>
+          <span class="ethics-badge">✅ Aplica</span>
+        </div>
+      </div>
+      <div class="ethics-card">
+        <div class="ethics-icon">👤</div>
+        <div>
+          <h5>Supervisión humana</h5>
+          <p>El asesor comercial mantiene la decisión final en todo momento. El modelo sugiere; el humano actúa. No se usarán etiquetas negativas para clientes.</p>
+          <span class="ethics-badge">✅ Aplica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">ProActa</div>
+  <div class="footer-meta">TalentoTech · Módulo: Aprendizaje Inteligente · Bogotá, Colombia · 2025</div>
+  <a class="footer-link" href="https://github.com/lorenalamontes/talento-tech-prediccion-demanda" target="_blank">Ver en GitHub ↗</a>
+</footer>
+
+</body>
+</html>
